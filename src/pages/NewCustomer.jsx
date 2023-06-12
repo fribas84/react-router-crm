@@ -6,8 +6,13 @@ export const action = async ({request})=>{
     const formData = await request.formData();
     const data = Object.fromEntries(formData);
     const errors = [];
+    let regex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
+    const email = formData.get('email');
     if(Object.values(data).includes('')){
         errors.push('All fields are mandatory!');
+    }
+    if(!regex.test(email)){
+        errors.push('Invalid email!');
     }
 
     if(errors.length){
