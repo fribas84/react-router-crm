@@ -19,8 +19,6 @@ export const action = async ({request})=>{
 export const NewCustomer = () => {
     const navigate = useNavigate();
     const errors = useActionData();
-
-    console.log(errors);
     return (
         <>
             <div className='font-black text-4xl text-blue-900'>New Customer</div>
