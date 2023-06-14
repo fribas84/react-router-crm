@@ -4,8 +4,9 @@ import './index.css';
 import {createBrowserRouter,RouterProvider} from 'react-router-dom';
 import Layout from './components/Layout';
 import { NewCustomer,action as actionNewCustomer } from './pages/NewCustomer';
-import { Index, loader as customerLoader } from './pages/Index';
+import { Index, loader as customersLoader, loader } from './pages/Index';
 import { ErrorPage } from './components/ErrorPage';
+import { EditCusomer, loader as customerLoader} from './pages/EditCusomer';
 
 const router = createBrowserRouter([
   {
@@ -15,13 +16,18 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Index />,
-        loader: customerLoader,
+        loader: customersLoader,
         errorElement: <ErrorPage />
       },
       {
         path: '/customers/new',
         element: <NewCustomer />,
         action: actionNewCustomer
+      },
+      {
+        path: '/customers/:customerId/edit',
+        element: <EditCusomer />,
+        loader: customerLoader,
       }
     ]
   },

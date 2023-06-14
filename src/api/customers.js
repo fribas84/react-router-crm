@@ -20,3 +20,11 @@ export const addCustomer = async (customer) =>{
       console.log(error)
    }
 }
+
+
+export const getCustomer = async (id) => {
+   const response = await fetch(`${import.meta.env.VITE_API_URL}/${id}`);
+   const result = await response.json();
+
+   return(result);
+}
