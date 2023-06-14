@@ -1,4 +1,4 @@
-import { useNavigate, Form, useActionData} from 'react-router-dom';
+import { useNavigate, Form, useActionData, redirect} from 'react-router-dom';
 import CustomerForm from '../components/CustomerForm';
 import Error from '../components/Error';
 import { addCustomer } from '../api/customers';
@@ -21,8 +21,8 @@ export const action = async ({request})=>{
         return errors;
     }
 
-    addCustomer(data);
-    return null;
+    await addCustomer(data);
+    return redirect('/');
 }
 
 export const NewCustomer = () => {

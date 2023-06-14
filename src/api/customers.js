@@ -6,6 +6,17 @@ export const getCustomers = async () => {
 }
 
 export const addCustomer = async (customer) =>{
-
-   console.log(customer);
+   try{
+      const response = await fetch(import.meta.env.VITE_API_URL,{
+         method:'POST',
+         body:JSON.stringify(customer),
+         headers:{
+            'Content-Type': 'application/json'
+         }
+      })
+      await response.json();
+   }
+   catch(error) {
+      console.log(error)
+   }
 }
