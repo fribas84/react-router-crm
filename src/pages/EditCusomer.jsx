@@ -1,7 +1,7 @@
-import { useNavigate, Form, useLoaderData} from 'react-router-dom';
+import { useNavigate, Form, useLoaderData, useActionData, redirect} from 'react-router-dom';
 import CustomerForm from '../components/CustomerForm';
 import Error from '../components/Error';
-import { getCustomer } from "../api/customers";
+import { getCustomer,updateCustomer } from "../api/customers";
 
 export const loader = async ({params})=>{
     const customer = await getCustomer(params.customerId);
@@ -14,10 +14,32 @@ export const loader = async ({params})=>{
 
     return customer;
 }
+
+export const action = async ({request, params}) => {
+    const formData = await request.formData();
+    const data = Object.fromEntries(formData);
+    const errors = [];
+    let regex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
+    const email = formData.get('email');
+    if(Object.values(data).includes('')){
+        errors.push('All fields are mandatory!');
+    }
+    if(!regex.test(email)){
+        errors.push('Invalid email!');
+    }
+
+    if(errors.length){
+        return errors;
+    }
+
+    await updateCustomer(params.customerId,data);
+    return redirect('/');
+}
 export const EditCusomer = () => {
     const navigate = useNavigate();
     const customer = useLoaderData();
-    const errors = [];
+    const errors = useActionData();
+
   return (
     <>
 
@@ -37,14 +59,14 @@ export const EditCusomer = () => {
     
                 >
 
-                    {/* {errors?.length && errors.map( (error,i)=><Error key={i}>{error}</Error>)} */}
+                    {errors?.length && errors.map( (error,i)=><Error key={i}>{error}</Error>)}
                     <CustomerForm 
                         customer={customer}
                     />
                     <input
                         type='submit'
                         className='mt-5 w-full bg-blue-800 p-3  font-bold text-white text-lg'
-                        value='Save Customer'
+                        value='Save Changes'
                     />
                 </Form>
 
