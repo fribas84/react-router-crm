@@ -6,9 +6,10 @@ export const ErrorPage = () =>{
     return(
         <div className="space-y-8">
             <div className='font-black text-4xl text-blue-900'>Customers</div>
-            <p className="text-center">An error ocurred</p>
-            <p className="text-center">{error.message}</p>
-
+            <div className="text-center my-4 bg-red-600 text-white font-bold p-3" >
+                <p className="text-center">An error ocurred: </p>
+                <p className="text-center">{error.statusText || error.message}</p>
+            </div>
 
 
         </div>
