@@ -1,6 +1,8 @@
 import { useNavigate, Form, useActionData} from 'react-router-dom';
 import CustomerForm from '../components/CustomerForm';
 import Error from '../components/Error';
+import { addCustomer } from '../api/customers';
+
 
 export const action = async ({request})=>{
     const formData = await request.formData();
@@ -18,6 +20,8 @@ export const action = async ({request})=>{
     if(errors.length){
         return errors;
     }
+
+    addCustomer(data);
     return null;
 }
 

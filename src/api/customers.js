@@ -4,3 +4,8 @@ export const getCustomers = async () => {
 
    return(result);
 }
+
+export const addCustomer = async (customer) =>{
+
+   console.log(customer);
+}
