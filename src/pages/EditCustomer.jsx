@@ -35,7 +35,7 @@ export const action = async ({request, params}) => {
     await updateCustomer(params.customerId,data);
     return redirect('/');
 }
-export const EditCusomer = () => {
+export const EditCustomer = () => {
     const navigate = useNavigate();
     const customer = useLoaderData();
     const errors = useActionData();

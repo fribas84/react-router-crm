@@ -1,5 +1,12 @@
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate,redirect,Form } from "react-router-dom";
+import { deleteCustomer } from "../api/customers";
+
+export const action = async ({params}) =>{
+    await deleteCustomer(params.customerId);
+    return redirect('/');
+
+}
 
 const Customer = ({ customer }) => {
     const navigate = useNavigate();
@@ -23,9 +30,19 @@ const Customer = ({ customer }) => {
                     onClick={()=>navigate(`/customers/${id}/edit`)}>
                     Edit
                 </button>
-                <button type="button" className="text-red-600 hover:text-red-700 uppercase font-bold text-xs">
+                <Form
+                    method="post"
+                    action={`/customers/${id}/delete`}
+                    onSubmit={(e)=>{
+                        if(!confirm(`Do you want to delete Customer ${name} from ${company}?`)){
+                            e.preventDefault();
+                        }
+                    }}>
+                <button type="submit" className="text-red-600 hover:text-red-700 uppercase font-bold text-xs">
                    Delete 
                 </button>
+
+                </Form>
 
             </td>
 

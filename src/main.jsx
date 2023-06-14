@@ -4,14 +4,15 @@ import './index.css';
 import {createBrowserRouter,RouterProvider} from 'react-router-dom';
 import Layout from './components/Layout';
 import { NewCustomer,action as actionNewCustomer } from './pages/NewCustomer';
-import { Index, loader as customersLoader, loader } from './pages/Index';
+import { Index, loader as customersLoader } from './pages/Index';
 import { ErrorPage } from './components/ErrorPage';
-import { EditCusomer, loader as customerLoader, action as actionEditCustomer} from './pages/EditCusomer';
-
+import { EditCustomer, loader as customerLoader, action as actionEditCustomer} from './pages/EditCustomer';
+import {action as deleteCustomerAction } from './components/Customer';
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Layout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -27,10 +28,16 @@ const router = createBrowserRouter([
       },
       {
         path: '/customers/:customerId/edit',
-        element: <EditCusomer />,
+        element: <EditCustomer />,
         loader: customerLoader,
         errorElement: <ErrorPage />,
         action: actionEditCustomer
+      },
+      {
+        path: '/customers/:customerId/delete',
+        action: deleteCustomerAction
+
+    
       }
     ]
   },
